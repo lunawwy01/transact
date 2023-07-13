@@ -148,11 +148,20 @@ nav {
   color: #666;
 }
 
-.movements__type--deposit {
+.movements__category {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #39b385;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+
+.movements__type--income {
   background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
-.movements__type--withdrawal {
+.movements__type--expense {
   background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
@@ -235,7 +244,7 @@ h2 {
 
 /* Exceptions for interst */
 .form.form--loan {
-  grid-template-columns: 2.5fr 1fr 2.5fr;
+  grid-template-columns: 2.5fr 2.5fr 1fr;
 }
 .form__label--loan {
   grid-row: 2;

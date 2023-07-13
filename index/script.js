@@ -85,6 +85,8 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+const inputCategory = document.querySelector('.form__input--category');
+const inputLoanCategory = document.querySelector('.form__input--category-loan');
 
 /////////////////////////////////////////////////
 // Functions
@@ -118,7 +120,7 @@ const displayMovements = function (acc, sort = false) {
     : acc.movements;
 
   movs.forEach(function (mov, i) {
-    const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const type = mov > 0 ? 'income' : 'expense';
 
     const date = new Date(acc.movementsDates[i]);
     const displayDate = formatMovementDate(date, acc.locale);
@@ -132,7 +134,7 @@ const displayMovements = function (acc, sort = false) {
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${category}</div>
+        <div class="movements__category">${category}</div>
         <div class="movements__value">${formattedMov}</div>
       </div>
     `;
@@ -273,24 +275,18 @@ btnLogin.addEventListener('click', function (e) {
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = +inputTransferAmount.value;
-  // const receiverAcc = accounts.find(
-  //   acc => acc.username === inputTransferTo.value
-  // );
-  inputTransferAmount.value = inputTransferTo.value = '';
+  const category = inputCategory.value;
+  inputTransferAmount.value = inputCategory.value = '';
 
-  if (
-    amount > 0 &&
-    receiverAcc &&
-    currentAccount.balance >= amount &&
-    receiverAcc?.username !== currentAccount.username
-  ) {
-    // Doing the transfer
+  if (amount > 0 && currentAccount.balance >= amount) {
+    // Recording the expense
     currentAccount.movements.push(-amount);
-    receiverAcc.movements.push(amount);
 
-    // Add transfer date
+    // Add expense date
     currentAccount.movementsDates.push(new Date().toISOString());
-    receiverAcc.movementsDates.push(new Date().toISOString());
+
+    // Add category of expense
+    currentAccount.category.push(category);
 
     // Update UI
     updateUI(currentAccount);
@@ -305,11 +301,15 @@ btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
   const amount = Math.floor(inputLoanAmount.value);
+  const category = inputLoanCategory.value; // capture category value
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     setTimeout(function () {
       // Add movement
       currentAccount.movements.push(amount);
+
+      // Add category of income
+      currentAccount.category.push(category);
 
       // Add loan date
       currentAccount.movementsDates.push(new Date().toISOString());
@@ -322,7 +322,9 @@ btnLoan.addEventListener('click', function (e) {
       timer = startLogOutTimer();
     }, 2500);
   }
+
   inputLoanAmount.value = '';
+  inputLoanCategory.value = ''; // reset category field after use
 });
 
 btnClose.addEventListener('click', function (e) {

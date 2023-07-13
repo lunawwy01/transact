@@ -75,25 +75,27 @@
         <button class="btn--sort">&downarrow; SORT</button>
       </div>
 
-      <!-- OPERATION: TRANSFERS -->
+      <!-- OPERATION: Expense -->
       <div class="operation operation--transfer">
-        <h2>Transfer money</h2>
+        <h2>Expense</h2>
         <form class="form form--transfer">
-          <input type="text" class="form__input form__input--to" />
+          <input type="text" class="form__input form__input--category" />
           <input type="number" class="form__input form__input--amount" />
           <button class="form__btn form__btn--transfer">&rarr;</button>
-          <label class="form__label">Transfer to</label>
+          <label class="form__label">Category</label>
           <label class="form__label">Amount</label>
         </form>
       </div>
 
       <!-- OPERATION: LOAN -->
       <div class="operation operation--loan">
-        <h2>Request loan</h2>
+        <h2>Income</h2>
         <form class="form form--loan">
+          <input type="text" class="form__input form__input--category-loan" />
           <input type="number" class="form__input form__input--loan-amount" />
           <button class="form__btn form__btn--loan">&rarr;</button>
-          <label class="form__label form__label--loan">Amount</label>
+          <label class="form__label">Category</label>
+          <label class="form__label">Amount</label>
         </form>
       </div>
 

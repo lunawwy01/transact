@@ -30,7 +30,8 @@ nav {
 }
 
 .logo {
-  height: 5.25rem;
+  height: 6rem;
+  transform: scaleX(-1);
 }
 
 .login {

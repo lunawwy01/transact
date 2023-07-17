@@ -1,12 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
-/////////////////////////////////////////////////
-// Data
-
 const account1 = {
   owner: 'Luna Wang',
   movements: [200, -30, -1500, 2500, -200, -8.9, -75.97, 1300],
@@ -33,7 +26,7 @@ const account1 = {
     '2023-08-01T10:51:36.790Z',
   ],
   currency: 'CAD',
-  locale: 'pt-PT', // de-DE
+  locale: 'en-US',
 };
 
 const account2 = {
@@ -74,27 +67,26 @@ const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
 
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
 const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
-const btnLoan = document.querySelector('.form__btn--loan');
+const btnExpense = document.querySelector('.form__btn--transfer');
+const btnSaving = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
-const btnSort = document.querySelector('.btn--sort');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
+const inputExpenseAmount = document.querySelector('.form__input--amount');
+const inputSavingAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 const inputCategory = document.querySelector('.form__input--category');
-const inputLoanCategory = document.querySelector('.form__input--category-loan');
+const inputSavingCategory = document.querySelector(
+  '.form__input--category-loan'
+);
 
 /////////////////////////////////////////////////
 // Functions
@@ -257,10 +249,7 @@ btnLogin.addEventListener('click', function (e) {
       day: 'numeric',
       month: 'numeric',
       year: 'numeric',
-      // weekday: 'long',
     };
-    // const locale = navigator.language;
-    // console.log(locale);
 
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccount.locale,
@@ -280,9 +269,9 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
-btnTransfer.addEventListener('click', function (e) {
+btnExpense.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = +inputTransferAmount.value;
+  const amount = +inputExpenseAmount.value;
   const category = inputCategory.value;
   inputTransferAmount.value = inputCategory.value = '';
 
@@ -305,11 +294,11 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
-btnLoan.addEventListener('click', function (e) {
+btnSaving.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Math.floor(inputLoanAmount.value);
-  const category = inputLoanCategory.value; // capture category value
+  const amount = Math.floor(inputSavingAmount.value);
+  const category = inputSavingCategory.value; // capture category value
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     setTimeout(function () {
@@ -346,7 +335,6 @@ btnClose.addEventListener('click', function (e) {
       acc => acc.username === currentAccount.username
     );
     console.log(index);
-    // .indexOf(23)
 
     // Delete account
     accounts.splice(index, 1);

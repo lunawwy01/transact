@@ -271,26 +271,28 @@ btnLogin.addEventListener('click', function (e) {
 
 btnExpense.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = +inputExpenseAmount.value;
+
+  const amount = Math.floor(inputExpenseAmount.value); // Use Math.floor for consistency with the saving function
   const category = inputCategory.value;
-  inputTransferAmount.value = inputCategory.value = '';
 
   if (amount > 0 && currentAccount.balance >= amount) {
-    // Recording the expense
-    currentAccount.movements.push(-amount);
+    setTimeout(function () {
+      // Deducting the expense
+      currentAccount.movements.push(-amount);
 
-    // Add expense date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add category of expense
+      currentAccount.category.push(category);
 
-    // Add category of expense
-    currentAccount.category.push(category);
+      // Add expense date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
 
-    // Reset timer
-    clearInterval(timer);
-    timer = startLogOutTimer();
+      // Reset timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
+    }, 2500);
   }
 });
 
